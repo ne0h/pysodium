@@ -33,9 +33,15 @@ import ctypes.util
 # load libsodium for different oses
 import platform
 if platform.system() == "Darwin":
-    sodium = ctypes.cdll.LoadLibrary("../3rdparty/libsodium/libsodium-osx/lib/libsodium.dylib")
+    try:
+        sodium = ctypes.cdll.LoadLibrary("../3rdparty/libsodium/libsodium-osx/lib/libsodium.dylib")
+    except:
+        sodium = ctypes.cdll.LoadLibrary("../../3rdparty/libsodium/libsodium-osx/lib/libsodium.dylib")
 elif platform.system() == "Linux":
-    sodium = ctypes.cdll.LoadLibrary("../3rdparty/libsodium/libsodium-linux/lib/libsodium.so")
+    try:
+        sodium = ctypes.cdll.LoadLibrary("../3rdparty/libsodium/libsodium-linux/lib/libsodium.so")
+    except:
+        sodium = ctypes.cdll.LoadLibrary("../../3rdparty/libsodium/libsodium-linux/lib/libsodium.so")
 
 #sodium = ctypes.cdll.LoadLibrary(ctypes.util.find_library('sodium') or ctypes.util.find_library('libsodium'))
 sodium.crypto_pwhash_scryptsalsa208sha256_strprefix.restype = ctypes.c_char_p
